@@ -7,7 +7,7 @@ This project is for COSC 586 - [Text Mining & Analysis](courses.georgetown.edu/i
 ## Author
 [@Zhuoran Wu](https://github.com/WuZhuoran)
 
-[@Shaobo Wang]()
+[@Shaobo Wang](https://github.com/sw1001)
 
 ## Adviser
 
