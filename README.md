@@ -25,3 +25,4 @@ This project is for COSC 586 - [Text Mining & Analysis](courses.georgetown.edu/i
 Thanks for all resources and all the contributors:
 
 1. [Shallow Benchmark](https://www.kaggle.com/selfishgene/shallow-benchmark-0-31675-lb)
+2. [First one solution](https://google.com)
