@@ -1,0 +1,4 @@
+# Files that will not be uploaded to GitHub.
+# Add file with the following condition
+# 1.Files that are larger than 100MB
+# 2.Temp files
