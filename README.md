@@ -10,7 +10,7 @@ The Data Analyse and Mining Project for the course ANLY-501 (COSC-587)
 
 [Armaan Khullar](https://github.com/ark317)
 
-[Kornraphop Kawintiranon](https://github.com/kornosk)
+[Kornraphop Kawintiranon (Ken)](https://github.com/kornosk)
 
 [Shaobo Wang](https://github.com/sw1001)
 
