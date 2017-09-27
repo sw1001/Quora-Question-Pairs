@@ -14,7 +14,7 @@ The Data Analyse and Mining Project for the course ANLY-501 (COSC-587)
 
 [Shaobo Wang](https://github.com/sw1001)
 
-[Zhuoran Wu](https://github.com/WuZhuoran)
+[Zhuoran Wu (Oliver)](https://github.com/WuZhuoran)
 
 ## Project Task Introduction
 
