@@ -15,6 +15,7 @@ from states import states 	# From states.py
 
 # Globle variables
 APP_TOKEN="cQovpGcdUT1CSzgYk0KPYdAI0"
+YEAR_RANGE=range(2000,2018)
 
 ##### Get areas available from the API using search
 # entity_name = word for search, typically use State such as VA, MD, DC, CA, etc.
@@ -94,7 +95,7 @@ def collectGraduationRates(state_abbr=[]):
 		count += len(areas)
 
 		for area in areas:
-			for year in range(2013, 2018):
+			for year in YEAR_RANGE:
 				print("Gathering - State: " + state + " Area: " + area["name"] + " Year: " + str(year))
 				
 				##### Graduation Rates
@@ -164,7 +165,7 @@ def collectCrimeCounts(state_abbr=[]):
 		place_in_us_count += len(areas)
 
 		for area in areas:
-			for year in range(2000, 2018):
+			for year in YEAR_RANGE:
 				print("Gathering - State: " + state + " Area: " + area["name"] + " Year: " + str(year))
 
 				##### Crime Counts
@@ -234,7 +235,7 @@ def collectCrimeRates(state_abbr=[]):
 		place_in_us_count += len(areas)
 
 		for area in areas:
-			for year in range(2000, 2018):
+			for year in YEAR_RANGE:
 				print("Gathering - State: " + state + " Area: " + area["name"] + " Year: " + str(year))
 
 				##### Crime Rates
@@ -310,7 +311,7 @@ def collectEarningInfo(state_abbr=[]):
 		place_in_us_count += len(areas)
 
 		for area in areas:
-			for year in range(2000, 2018):
+			for year in YEAR_RANGE:
 				print("Gathering - State: " + state + " Area: " + area["name"] + " Year: " + str(year))
 
 				##### Earning Info
@@ -338,13 +339,15 @@ def collectEarningInfo(state_abbr=[]):
 	print("Place with earning_info number in US: " + str(earning_info_count))
 
 def main():
-	# Specify states by using params list such as ["VA", "DC", ...]
-	# If not assign params, default is to use every states
-	
-	# collectGraduationRates()			
+	"""
+		Specify states by using params list such as ["VA", "DC", ...]
+		If not assign params, default is to use every states
+		Uncomment to activate methods
+	"""
+	# collectGraduationRates()
 	# collectCrimeCounts()
-	# collectCrimeRates(["DC"])				# Crime rate per 100k people
-	collectEarningInfo(["DC"])
+	# collectCrimeRates()				# Crime rate per 100k people
+	# collectEarningInfo()
 
 
 
