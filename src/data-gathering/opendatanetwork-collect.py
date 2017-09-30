@@ -82,10 +82,8 @@ def collectGraduationRates(state_abbr=[]):
 
 	# Delete all old data
 	graduation_rates_file_name = "graduation_rates.csv"
-	if os.path.isfile(graduation_rates_file_name):
-		os.remove(graduation_rates_file_name)
-		with open(graduation_rates_file_name, 'w') as f:
-			f.write(",".join(graduation_rates_header + graduation_rate_types) + '\n')
+	with open(graduation_rates_file_name, 'w') as f:
+		f.write(",".join(graduation_rates_header + graduation_rate_types) + '\n')
 
 
 	count = 0
@@ -155,10 +153,8 @@ def collectCrimeCounts(state_abbr=[]):
 
 	# Delete all old data
 	crime_counts_file_name = "crime_counts.csv"
-	if os.path.isfile(crime_counts_file_name):
-		os.remove(crime_counts_file_name)
-		with open(crime_counts_file_name, 'w') as f:
-			f.write(",".join(crime_counts_header + crime_count_types) + '\n')
+	with open(crime_counts_file_name, 'w') as f:
+		f.write(",".join(crime_counts_header + crime_count_types) + '\n')
 
 	place_in_us_count = 0
 	crime_counts_count = 0	# How many places we found for crime counts
@@ -181,7 +177,6 @@ def collectCrimeCounts(state_abbr=[]):
 					for crime_count in crime_counts:
 						crime_name = crime_count[0]
 
-						# There are 5 graduation rate types in general
 						for idx, crime_count_type in enumerate(crime_count_types):
 							if crime_name == crime_count_type: crime_counts_row[idx] = str(crime_count[1])
 
@@ -228,10 +223,8 @@ def collectCrimeRates(state_abbr=[]):
 
 	# Delete all old data
 	crime_rates_file_name = "crime_rates.csv"
-	if os.path.isfile(crime_rates_file_name):
-		os.remove(crime_rates_file_name)
-		with open(crime_rates_file_name, 'w') as f:
-			f.write(",".join(crime_rates_header + crime_rate_types) + '\n')
+	with open(crime_rates_file_name, 'w') as f:
+		f.write(",".join(crime_rates_header + crime_rate_types) + '\n')
 
 	place_in_us_count = 0
 	crime_rates_count = 0	# How many places we found for crime rates
@@ -254,7 +247,6 @@ def collectCrimeRates(state_abbr=[]):
 					for crime_rate in crime_rates:
 						crime_name = crime_rate[0]
 
-						# There are 5 graduation rate types in general
 						for idx, crime_rate_type in enumerate(crime_rate_types):
 							if crime_name == crime_rate_type: crime_rates_row[idx] = str(crime_rate[1])
 
@@ -270,14 +262,89 @@ def collectCrimeRates(state_abbr=[]):
 	print("Place with crime_rates number in US: " + str(crime_rates_count))
 
 
+def getEarningInfo(area_id, year):
+	# Setup API caller
+	url = "http://api.opendatanetwork.com/data/v1/values"
+	payload = {
+		"app_token" : APP_TOKEN,
+		"describe" : "false",
+		"format" : "",
+		"variable" : "jobs.earnings",
+		"entity_id" : area_id,
+		"forecast" : 0,
+		"year" : year
+	}
+
+	# Response from API
+	res = requests.get(url, params=payload)
+
+	# If call API success
+	if res.status_code == 200:
+		res = res.json()["data"][1:]	# First element contains just variable names
+		return res
+	else:
+		return []
+
+
+def collectEarningInfo(state_abbr=[]):
+	# Variables
+	earning_info_header = ["area_id", "area_name", "area_type", "year"]
+	earning_info_types = ["female_full_time_median_earnings", "female_median_earnings", 
+		"male_full_time_median_earnings", "male_median_earnings", "median_earnings",
+		"median_earnings_bachelor_degree", "median_earnings_graduate_or_professional_degree",
+		"median_earnings_high_school", "median_earnings_less_than_high_school", "median_earnings_some_college_or_associates",
+		"percent_with_earnings_10000_to_14999", "percent_with_earnings_15000_to_24999", "percent_with_earnings_1_to_9999",
+		"percent_with_earnings_25000_to_34999", "percent_with_earnings_35000_to_49999", "percent_with_earnings_50000_to_64999",
+		"percent_with_earnings_65000_to_74999", "percent_with_earnings_75000_to_99999", "percent_with_earnings_over_100000"]
+
+	# Delete all old data
+	earning_info_file_name = "earning_info.csv"
+	with open(earning_info_file_name, 'w') as f:
+		f.write(",".join(earning_info_header + earning_info_types) + '\n')
+
+	place_in_us_count = 0
+	earning_info_count = 0	# How many places we found for earning info
+	for state in list(states.keys()):
+		if len(state_abbr) > 0 and not state in state_abbr: continue	# If specify states
+		areas = getAreas(state, ["region.place"])
+		place_in_us_count += len(areas)
+
+		for area in areas:
+			for year in range(2000, 2018):
+				print("Gathering - State: " + state + " Area: " + area["name"] + " Year: " + str(year))
+
+				##### Earning Info
+				earning_infos = getEarningInfo(area["id"], year)
+				if len(earning_infos) > 0:	# Not empty
+					earning_info_count += 1
+					row = [str(area["id"]), area["name"], area["type"], str(year)]
+					earning_info_row = [""] * len(earning_info_types)
+
+					for earning_info in earning_infos:
+						earning_info_name = earning_info[0]
+
+						for idx, earning_info_type in enumerate(earning_info_types):
+							if earning_info_name == earning_info_type: earning_info_row[idx] = str(earning_info[1])
+
+					# Write to file
+					with open(earning_info_file_name, 'a') as f:
+						row = list(map((lambda x: x.replace(",", "-")), row))	# Remove ',' in area names
+						line = ",".join(row + earning_info_row)
+						f.write(line+"\n")
+
+	# General Summary
+	print("\n########## General Summary ##########")
+	print("Place number in US: " + str(place_in_us_count))
+	print("Place with earning_info number in US: " + str(earning_info_count))
+
 def main():
 	# Specify states by using params list such as ["VA", "DC", ...]
 	# If not assign params, default is to use every states
 	
 	# collectGraduationRates()			
 	# collectCrimeCounts()
-	collectCrimeRates(["DC"])				# Crime rate per 100k people
-
+	# collectCrimeRates(["DC"])				# Crime rate per 100k people
+	collectEarningInfo(["DC"])
 
 
 
