@@ -89,5 +89,5 @@ for zpid in data.zpid:
     data.loc[data['zpid'] == zpid, 'valueChange'] = root[2][3][3].text
 
 
-data.to_csv('../input/Zillow_House_Info_1000_Sample', index=False)
+data.to_csv('../input/Zillow_House_Info_1000_Sample.csv', index=False)
 
