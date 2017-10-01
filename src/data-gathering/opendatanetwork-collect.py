@@ -10,6 +10,7 @@ import json
 import requests
 import numpy as np
 import pandas as pd
+import os
 import os.path
 from states import states 	# From states.py
 
@@ -345,12 +346,12 @@ def main():
 		Uncomment to activate methods
 	"""
 	# collectGraduationRates()
-	# collectCrimeCounts()
+	collectCrimeCounts()
 	# collectCrimeRates()				# Crime rate per 100k people
 	# collectEarningInfo()
 
-
-
+	# Alarm when finished
+	os.system('say "your program has finished"')
 
 
 
