@@ -19,8 +19,10 @@ APP_TOKEN="cQovpGcdUT1CSzgYk0KPYdAI0"
 YEAR_RANGE=range(2000,2018)
 
 ##### Get areas available from the API using search
-# entity_name = word for search, typically use State such as VA, MD, DC, CA, etc.
-# area_types = specific scope of area result - ["region.msa", "region.county", "region.place"]
+"""
+	entity_name = word for search, typically use State such as VA, MD, DC, CA, etc.
+	area_types = specific scope of area result - ["region.msa", "region.county", "region.place"]
+"""
 def getAreas(entity_name, area_types=[]):
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/entity/v1"
