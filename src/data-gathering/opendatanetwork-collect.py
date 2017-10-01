@@ -346,13 +346,12 @@ def main():
 		Uncomment to activate methods
 	"""
 	# collectGraduationRates()
-	# collectCrimeCounts()
+	collectCrimeCounts()
 	# collectCrimeRates()				# Crime rate per 100k people
 	# collectEarningInfo()
 
 	# Alarm when finished
 	os.system('say "your program has finished"')
-
 
 
 
