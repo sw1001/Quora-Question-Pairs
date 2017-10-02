@@ -422,7 +422,7 @@ def main():
 	# collectCrimeCounts()
 	# collectCrimeRates()				# Crime rate per 100k people
 	# collectEarningInfo()
-	collecGDPInfo(year_range=range(2001, 2014))
+	# collecGDPInfo(year_range=range(2001, 2014))
 
 	# Alarm when finished
 	os.system('say "your program has finished"')
