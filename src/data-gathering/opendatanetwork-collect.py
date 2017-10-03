@@ -18,12 +18,17 @@ from states import states 	# From states.py
 APP_TOKEN="cQovpGcdUT1CSzgYk0KPYdAI0"
 YEAR_RANGE=range(2000,2018)
 
-##### Get areas available from the API using search
-"""
-	entity_name = word for search, typically use State such as VA, MD, DC, CA, etc.
-	area_types = specific scope of area result - ["region.msa", "region.county", "region.place"]
-"""
-def getAreas(entity_name, area_types=[]):
+
+def getAreas(
+		entity_name,
+		area_types=[]):
+	"""
+    Get areas available from the API using search
+    :param entity_name: Word for search, typically use State such as VA, MD, DC, CA, etc.
+    :param area_types: Specific scope of area result - ["region.msa", "region.county", "region.place"]
+    :return: Response from request
+    """
+
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/entity/v1"
 	payload = {
@@ -54,8 +59,16 @@ def getAreas(entity_name, area_types=[]):
 	return []
 
 
-##### Gather Education data by specific area
-def getGraduationRates(area_id, year):
+def getGraduationRates(
+		area_id,
+		year):
+	"""
+	Gather Education data by specific area
+	:param area_id: Specific areaa ID for request API
+    :param year: Specific year for request API
+    :return: Response from request
+	"""
+
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/data/v1/values"
 	payload = {
@@ -79,7 +92,16 @@ def getGraduationRates(area_id, year):
 		return []
 
 
-def collectGraduationRates(state_abbr=[], year_range=YEAR_RANGE):
+def collectGraduationRates(
+		state_abbr=[],
+		year_range=YEAR_RANGE):
+	"""
+    Collect graduation rates using 'getGraduationRates()' and write to csv file
+    :param state_abbr: List of selected states that the data will be collected and write to file
+    :param year_range: List of year that the data will be collected. This can be the year that data is not available
+    :return: None
+    """
+
 	# Variables
 	graduation_rates_header = ["area_id", "area_name", "area_type", "year"]
 	graduation_rate_types = ["percent_associates_degree", "percent_bachelors_degree_or_higher", "percent_graduate_or_professional_degree", "percent_high_school_graduate_or_higher", "percent_less_than_9th_grade"]
@@ -126,7 +148,16 @@ def collectGraduationRates(state_abbr=[], year_range=YEAR_RANGE):
 	print("Place with graduation_rates number in US: " + str(graduation_rates_count))
 
 
-def getCrimeCounts(area_id, year):
+def getCrimeCounts(
+		area_id,
+		year):
+	"""
+	Gather Crime count data by specific area, there are many types of crimes
+	:param area_id: Specific areaa ID for request API
+    :param year: Specific year for request API
+    :return: Response from request
+	"""
+
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/data/v1/values"
 	payload = {
@@ -150,7 +181,16 @@ def getCrimeCounts(area_id, year):
 		return []
 
 
-def collectCrimeCounts(state_abbr=[], year_range=YEAR_RANGE):
+def collectCrimeCounts(
+		state_abbr=[],
+		year_range=YEAR_RANGE):
+	"""
+    Collect crime count using 'getCrimeCounts()' and write to csv file
+    :param state_abbr: List of selected states that the data will be collected and write to file
+    :param year_range: List of year that the data will be collected. This can be the year that data is not available
+    :return: None
+    """
+
 	# Variables
 	crime_counts_header = ["area_id", "area_name", "area_type", "year"]
 	crime_count_types = ["Aggravated assault", "All Crimes", "Burglary", "Larceny", "Motor vehicle theft", "Murder and nonnegligent manslaughter", "Property crime", "Rape (revised definition)", "Robbery", "Violent crime"]
@@ -196,7 +236,16 @@ def collectCrimeCounts(state_abbr=[], year_range=YEAR_RANGE):
 	print("Place with crime_counts number in US: " + str(crime_counts_count))
 
 
-def getCrimeRates(area_id, year):
+def getCrimeRates(
+		area_id,
+		year):
+	"""
+	Gather Crime rate data by specific area, there are many types of crimes
+	:param area_id: Specific areaa ID for request API
+    :param year: Specific year for request API
+    :return: Response from request
+	"""
+
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/data/v1/values"
 	payload = {
@@ -220,7 +269,16 @@ def getCrimeRates(area_id, year):
 		return []
 
 
-def collectCrimeRates(state_abbr=[], year_range=YEAR_RANGE):
+def collectCrimeRates(
+		state_abbr=[],
+		year_range=YEAR_RANGE):
+	"""
+    Collect crime rates using 'getCrimeRates()' and write to csv file
+    :param state_abbr: List of selected states that the data will be collected and write to file
+    :param year_range: List of year that the data will be collected. This can be the year that data is not available
+    :return: None
+    """
+
 	# Variables
 	crime_rates_header = ["area_id", "area_name", "area_type", "year"]
 	crime_rate_types = ["Aggravated assault", "All Crimes", "Burglary", "Larceny", "Motor vehicle theft", "Murder and nonnegligent manslaughter", "Property crime", "Rape (revised definition)", "Robbery", "Violent crime"]
@@ -266,7 +324,16 @@ def collectCrimeRates(state_abbr=[], year_range=YEAR_RANGE):
 	print("Place with crime_rates number in US: " + str(crime_rates_count))
 
 
-def getEarningInfo(area_id, year):
+def getEarningInfo(
+		area_id,
+		year):
+	"""
+	Gather Earning infomation by specific area, there are many types of Earning information
+	:param area_id: Specific areaa ID for request API
+    :param year: Specific year for request API
+    :return: Response from request
+	"""
+
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/data/v1/values"
 	payload = {
@@ -290,7 +357,16 @@ def getEarningInfo(area_id, year):
 		return []
 
 
-def collectEarningInfo(state_abbr=[], year_range=YEAR_RANGE):
+def collectEarningInfo(
+		state_abbr=[],
+		year_range=YEAR_RANGE):
+	"""
+    Collect Earning information using 'getEarningInfo()' and write to csv file
+    :param state_abbr: List of selected states that the data will be collected and write to file
+    :param year_range: List of year that the data will be collected. This can be the year that data is not available
+    :return: None
+    """
+
 	# Variables
 	earning_info_header = ["area_id", "area_name", "area_type", "year"]
 	earning_info_types = ["female_full_time_median_earnings", "female_median_earnings", 
@@ -342,7 +418,16 @@ def collectEarningInfo(state_abbr=[], year_range=YEAR_RANGE):
 	print("Place with earning_info number in US: " + str(earning_info_count))
 
 
-def getGDPInfo(area_id, year):
+def getGDPInfo(
+		area_id,
+		year):
+	"""
+	Gather GDP data by specific area
+	:param area_id: Specific areaa ID for request API
+    :param year: Specific year for request API
+    :return: Response from request
+	"""
+
 	# Setup API caller
 	url = "http://api.opendatanetwork.com/data/v1/values"
 	payload = {
@@ -366,7 +451,16 @@ def getGDPInfo(area_id, year):
 		return []
 
 
-def collecGDPInfo(state_abbr=[], year_range=YEAR_RANGE):
+def collecGDPInfo(
+		state_abbr=[],
+		year_range=YEAR_RANGE):
+	"""
+    Collect GDP using 'getGDPInfo()' and write to csv file (This is metropolitan level)
+    :param state_abbr: List of selected states that the data will be collected and write to file
+    :param year_range: List of year that the data will be collected. This can be the year that data is not available
+    :return: None
+    """
+
 	# Variables
 	gdp_info_header = ["area_id", "area_name", "area_type", "year"]
 	gdp_info_types = ["per_capita_gdp", "per_capita_gdp_percent_change"]
@@ -426,18 +520,6 @@ def main():
 
 	# Alarm when finished
 	os.system('say "your program has finished"')
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
