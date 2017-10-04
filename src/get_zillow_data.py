@@ -1,5 +1,5 @@
 """
-File: GetZillowData.py
+File: get_zillow_data.py
 Author: Zhuoran Wu
 Email: zw118@georgetown.edu
 """
@@ -204,7 +204,7 @@ def get_rows_from_updated_property_details_api(
     :param dataframe: The dataframe with zpid, address and citystate
     :param row_start: The row we start to collect data.
     :param row_end: The row we end to collect data
-    :param zwsid: The zwisd API KEY
+    :param zwisd: The zwisd API KEY
     :return: the update dataframe
     """
 
@@ -281,12 +281,10 @@ def main():
     house_update_column = ['zpid,',
                            'rooms',
                            'units',
-                           'heatsystemtype',
-                           'airconditiontype,',
+                           'airconditiontype',
+                           'heatsystemtype,',
                            'buildingquality',
-                           'basementSqFt',
-                           'latitude',
-                           'longitude']
+                           'pools']
 
     # Read Zpid List
     data_zpid_list = pd.read_csv('../input/' + house_zpidList_filename)
