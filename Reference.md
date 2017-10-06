@@ -21,4 +21,24 @@
    > An in-depth introduction to using Keras for language modeling
 
 
-## Other Materials
+## Papers
+
+1. [A mutual information and information entropy pair based feature selection method in text classification](http://ieeexplore.ieee.org/document/5620805/)
+
+2. [Convolutional Neural Networks for Sentence Classification](http://emnlp2014.org/papers/pdf/EMNLP2014181.pdf)
+
+3. [Duplicate Question Pair Detection with Deep Learning](https://web.stanford.edu/class/cs224n/reports/2759336.pdf)
+
+4. [Efficient Estimation of Word Representations in Vector Space](https://arxiv.org/abs/1301.3781)
+
+5. [Enhancing and Combining Sequential and Tree LSTM for Natural Language Inference](https://arxiv.org/abs/1609.06038)
+
+6. [High-Performing Feature Selection for Text Classification](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.15.2350&rep=rep1&type=pdf)
+
+7. [Long Short Term Memory](http://www.bioinf.jku.at/publications/older/2604.pdf)
+
+8. [Probabilistic Siamese Network for Learning Representations](https://tspace.library.utoronto.ca/bitstream/1807/43097/3/Liu_Chen_201311_MASc_thesis.pdf)
+
+9. [Proceedings of the 1stWorkshop on Representation Learning for NLP](https://sites.google.com/site/repl4nlp2016/accepted-papers)
+
+10. [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215) 
