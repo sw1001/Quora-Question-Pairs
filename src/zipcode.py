@@ -6,18 +6,17 @@ Email: zw118@georgetown.edu
 
 import pandas as pd
 import math
-import json
 import googlemaps
 
-data_filename = 'temp.csv'
+data_filename = 'Zillow_House_Info.csv'
 GoogleAPIKey = 'AIzaSyCSRNt6-gf8XiTCUKP2udaW6WJZWh7ykGE'
 
 
 def transfer_zipcode_to_city_state(dataframe):
     """
-
-    :param dataframe:
-    :return:
+    Give an dataframe with zpid, zip code, transfer to City and State via Google Map API.
+    :param dataframe: The Dataframe with zpid and zipcode
+    :return: the updated dataframe.
     """
     dataframe['city'] = ""
     dataframe['county'] = ""
