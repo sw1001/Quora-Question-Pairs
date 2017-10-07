@@ -1,8 +1,15 @@
 # Reference
 
-> This file contains the list of materials we used in this project.
+For Project for COSC586 Text Mining & Analysis
 
-## Bibliography
+> Team Member:
+`Shaobo Wang` <sw1001@georgetown.edu>
+`Zhuoran Wu` <zw118@georgetown.edu>
+
+> Team Project GitHub Page:
+[Quora-Question-Pairs](https://github.com/WuZhuoran/Quora-Question-Pairs)
+
+> This file contains the list of materials we used in this project.
 
 ## Blog
 1. [First Quora Dataset Release: Question Pairs](https://data.quora.com/First-Quora-Dataset-Release-Question-Pairs)
@@ -41,4 +48,4 @@
 
 9. [Proceedings of the 1stWorkshop on Representation Learning for NLP](https://sites.google.com/site/repl4nlp2016/accepted-papers)
 
-10. [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215) 
+10. [Sequence to Sequence Learning with Neural Networks](https://arxiv.org/abs/1409.3215)
