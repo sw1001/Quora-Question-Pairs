@@ -1,3 +1,10 @@
+"""
+File: baseline.py
+Author: Zhuoran Wu
+Email: zw118@georgetown.edu
+Reference: https://www.kaggle.com/selfishgene/shallow-benchmark-0-31675-lb
+"""
+
 import time
 import pandas as pd
 import numpy as np

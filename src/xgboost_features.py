@@ -1,5 +1,11 @@
+"""
+File: xgboost_features.py
+Author: Zhuoran Wu
+Email: zw118@georgetown.edu
+Reference: https://www.kaggle.com/act444/lb-0-158-xgb-handcrafted-leaky/code
 
-
+Import Train Features and Test Features from: https://www.kaggle.com/c/quora-question-pairs/discussion/31284
+"""
 
 import argparse
 import functools
@@ -12,7 +18,7 @@ from nltk.corpus import stopwords
 import nltk
 from collections import Counter
 from sklearn.metrics import log_loss
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 
 import xgboost as xgb
 
