@@ -1,3 +1,6 @@
+
+
+
 import argparse
 import functools
 from collections import defaultdict
@@ -212,7 +215,7 @@ def build_features(data, stops, weights):
 
 def main():
     parser = argparse.ArgumentParser(description='XGB with Handcrafted Features')
-    parser.add_argument('--save', type=str, default='XGB_leaky',
+    parser.add_argument('--save', type=str, default='xgboost_features',
                         help='save_file_names')
     args = parser.parse_args()
 
@@ -292,14 +295,14 @@ def main():
     print(np.mean(y_valid))
     del pos_valid, neg_valid
 
-    params = {}
-    params['objective'] = 'binary:logistic'
-    params['eval_metric'] = 'logloss'
-    params['eta'] = 0.02
-    params['max_depth'] = 7
-    params['subsample'] = 0.6
-    params['base_score'] = 0.2
-    # params['scale_pos_weight'] = 0.2
+    params = {
+        'objective': 'binary:logistic',
+        'eval_metric': 'logloss',
+        'eta': 0.02,
+        'max_depth': 7,
+        'subsample': 0.6,
+        'base_score': 0.2
+    }
 
     d_train = xgb.DMatrix(X_train, label=y_train)
     d_valid = xgb.DMatrix(X_valid, label=y_valid)
@@ -307,8 +310,12 @@ def main():
     watchlist = [(d_train, 'train'), (d_valid, 'valid')]
 
     bst = xgb.train(params, d_train, 2500, watchlist, early_stopping_rounds=50, verbose_eval=50)
-    print(log_loss(y_valid, bst.predict(d_valid)))
     bst.save_model(args.save + '.mdl')
+
+    # bst = xgb.Booster({'nthread': 4})  # init model
+    # bst.load_model('xgboost_features.mdl')  # load data
+
+    print(log_loss(y_valid, bst.predict(d_valid)))
 
     print('Building Test Features')
     df_test = pd.read_csv('../input/test_features.csv', encoding="ISO-8859-1")
@@ -324,12 +331,13 @@ def main():
 
     x_test = build_features(df_test, stops, weights)
     x_test = pd.concat((x_test, x_test_ab, test_leaky), axis=1)
+
     d_test = xgb.DMatrix(x_test)
     p_test = bst.predict(d_test)
     sub = pd.DataFrame()
     sub['test_id'] = df_test['test_id']
     sub['is_duplicate'] = p_test
-    sub.to_csv('submissions_' + args.save + '.csv')
+    sub.to_csv('submission_' + args.save + '.csv', index=False)
 
 
 if __name__ == '__main__':
