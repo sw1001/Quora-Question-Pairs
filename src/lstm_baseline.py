@@ -23,8 +23,8 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 
 import sys
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+# reload(sys)
+# sys.setdefaultencoding('utf-8')
 
 ########################################
 ## set directories and parameters
