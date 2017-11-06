@@ -25,14 +25,16 @@ from sklearn.model_selection import train_test_split
 
 import xgboost as xgb
 
+WNL = WordNetLemmatizer()
+
 
 def cutter(word):
     if len(word) < 4:
         return word
-    return WordNetLemmatizer().lemmatize(WordNetLemmatizer().lemmatize(word, "n"), "v")
+    return WNL.lemmatize(WNL.lemmatize(word, "n"), "v")
 
 
-def cleanProcess(text):
+def clean_process(text):
     if pd.isnull(text):
         return ''
 
@@ -334,10 +336,10 @@ def main():
 
     # Clean the data
 
-    df_train["question1"] = df_train["question1"].fillna("").apply(cleanProcess)
-    df_train["question2"] = df_train["question2"].fillna("").apply(cleanProcess)
-    df_test["question1"] = df_test["question1"].fillna("").apply(cleanProcess)
-    df_test["question2"] = df_test["question2"].fillna("").apply(cleanProcess)
+    df_train["question1"] = df_train["question1"].fillna("").apply(clean_process)
+    df_train["question2"] = df_train["question2"].fillna("").apply(clean_process)
+    df_test["question1"] = df_test["question1"].fillna("").apply(clean_process)
+    df_test["question2"] = df_test["question2"].fillna("").apply(clean_process)
 
     ques = pd.concat([df_train[['question1', 'question2']],
                       df_test[['question1', 'question2']]], axis=0).reset_index(drop='index')
