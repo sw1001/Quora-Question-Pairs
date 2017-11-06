@@ -1,3 +1,5 @@
 *.csv
 *.mdl
 .kaggle-cli/
+*.h5
+*.out
