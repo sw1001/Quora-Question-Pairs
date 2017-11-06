@@ -322,6 +322,7 @@ def main():
     args = parser.parse_args()
 
     nltk.download('stopwords')
+    nltk.download("wordnet")
 
     df_train = pd.read_csv('../input/train_features.csv', encoding="ISO-8859-1")
     X_train_ab = df_train.iloc[:, 2:-1]
