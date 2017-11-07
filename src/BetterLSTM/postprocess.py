@@ -12,8 +12,8 @@ MAX_UPDATE = 0.2
 DUP_UPPER_BOUND = 0.98
 NOT_DUP_LOWER_BOUND = 0.01
 
-df_train = pd.read_csv("data/train.csv")
-df_test = pd.read_csv("data/test.csv")
+df_train = pd.read_csv("../../input/train.csv")
+df_test = pd.read_csv("../../input/test.csv")
 
 print("Average Ensembling...")
 df = pd.read_csv("predictions/preds0.csv")
@@ -77,5 +77,5 @@ for i in range(REPEAT):
     print("Updated:", count)
 
 submission = pd.DataFrame({"test_id":df_test["test_id"], "is_duplicate":test_label})
-submission.to_csv("predictions/submission.csv", index=False)
+submission.to_csv("predictions/submission_better_lstm.csv", index=False)
 

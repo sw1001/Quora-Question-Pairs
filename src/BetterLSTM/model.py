@@ -106,8 +106,8 @@ def extract_features(df):
 
     return q1s, q2s, features
 
-train = pd.read_csv("data/train.csv")
-test = pd.read_csv("data/test.csv")
+train = pd.read_csv("../../input/train.csv")
+test = pd.read_csv("../../input/test.csv")
 
 train["question1"] = train["question1"].fillna("").apply(preprocess)
 train["question2"] = train["question2"].fillna("").apply(preprocess)
@@ -144,8 +144,8 @@ for word, i in word_index.items():
 
 
 print("Train features are being merged with NLP and Non-NLP features...")
-train_nlp_features = pd.read_csv("data/nlp_features_train.csv")
-train_non_nlp_features = pd.read_csv("data/non_nlp_features_train.csv")
+train_nlp_features = pd.read_csv("../../input/nlp_features_train.csv")
+train_non_nlp_features = pd.read_csv("../../input/non_nlp_features_train.csv")
 features_train = np.hstack((train_q_features, train_nlp_features, train_non_nlp_features))
 
 print("Same steps are being applied for test...")
@@ -154,8 +154,8 @@ test["question2"] = test["question2"].fillna("").apply(preprocess)
 q1s_test, q2s_test, test_q_features = extract_features(test)
 test_data_1 = pad_sequences(tokenizer.texts_to_sequences(q1s_test), maxlen=MAX_SEQUENCE_LENGTH)
 test_data_2 = pad_sequences(tokenizer.texts_to_sequences(q2s_test), maxlen=MAX_SEQUENCE_LENGTH)
-test_nlp_features = pd.read_csv("data/nlp_features_test.csv")
-test_non_nlp_features = pd.read_csv("data/non_nlp_features_test.csv")
+test_nlp_features = pd.read_csv("../../input/nlp_features_test.csv")
+test_non_nlp_features = pd.read_csv("../../input/non_nlp_features_test.csv")
 features_test = np.hstack((test_q_features, test_nlp_features, test_non_nlp_features))
 
 

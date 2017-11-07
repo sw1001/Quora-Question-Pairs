@@ -76,8 +76,8 @@ def get_freq_features(df, frequency_map):
     df["freq2"] = df["qid2"].map(lambda x: min(frequency_map[x], FREQ_UPPER_BOUND))
     return df
 
-train_df = pd.read_csv("data/train.csv")
-test_df = pd.read_csv("data/test.csv")
+train_df = pd.read_csv("../../input/train.csv")
+test_df = pd.read_csv("../../input/test.csv")
 
 print("Hashing the questions...")
 question_dict = create_question_hash(train_df, test_df)
@@ -106,5 +106,5 @@ train_df = convert_to_minmax(train_df, "freq")
 test_df = convert_to_minmax(test_df, "freq")
 
 cols = ["min_kcore", "max_kcore", "common_neighbor_count", "common_neighbor_ratio", "min_freq", "max_freq"]
-train_df.loc[:, cols].to_csv("data/non_nlp_features_train.csv", index=False)
-test_df.loc[:, cols].to_csv("data/non_nlp_features_test.csv", index=False)
+train_df.loc[:, cols].to_csv("../../input/non_nlp_features_train.csv", index=False)
+test_df.loc[:, cols].to_csv("../../input/non_nlp_features_test.csv", index=False)
