@@ -114,11 +114,11 @@ def clean_process(text):
     text = ''.join([c for c in text if c not in punctuation]).lower()
 
     text = text.split()
-    text = [w for w in text if not w in stops]
+    text = [w for w in text if w not in stops]
     text = ' '.join(text)
 
     # Return a list of words
-    return (text)
+    return text
 
 
 def word_match_share(row, stops=None):
@@ -135,8 +135,8 @@ def word_match_share(row, stops=None):
         return 0
     shared_words_in_q1 = [w for w in q1words.keys() if w in q2words]
     shared_words_in_q2 = [w for w in q2words.keys() if w in q1words]
-    R = (len(shared_words_in_q1) + len(shared_words_in_q2)) / (len(q1words) + len(q2words))
-    return R
+    r = (len(shared_words_in_q1) + len(shared_words_in_q2)) / (len(q1words) + len(q2words))
+    return r
 
 
 def jaccard(row):
@@ -144,7 +144,7 @@ def jaccard(row):
     uw = set(row['question1']).union(row['question2'])
     if len(uw) == 0:
         uw = [1]
-    return (len(wic) / len(uw))
+    return len(wic) / len(uw)
 
 
 def common_words(row):
@@ -274,47 +274,47 @@ def tfidf_word_match_share(row, weights=None):
                                                                                     q2words.keys() if w in q1words]
     total_weights = [weights.get(w, 0) for w in q1words] + [weights.get(w, 0) for w in q2words]
 
-    R = np.sum(shared_weights) / np.sum(total_weights)
-    return R
+    r = np.sum(shared_weights) / np.sum(total_weights)
+    return r
 
 
 def build_features(data, stops, weights):
-    X = pd.DataFrame()
+    x = pd.DataFrame()
     f = functools.partial(word_match_share, stops=stops)
-    X['word_match'] = data.apply(f, axis=1, raw=True)  # 1
+    x['word_match'] = data.apply(f, axis=1, raw=True)  # 1
 
     f = functools.partial(tfidf_word_match_share, weights=weights)
-    X['tfidf_wm'] = data.apply(f, axis=1, raw=True)  # 2
+    x['tfidf_wm'] = data.apply(f, axis=1, raw=True)  # 2
 
     f = functools.partial(tfidf_word_match_share_stops, stops=stops, weights=weights)
-    X['tfidf_wm_stops'] = data.apply(f, axis=1, raw=True)  # 3
+    x['tfidf_wm_stops'] = data.apply(f, axis=1, raw=True)  # 3
 
-    X['jaccard'] = data.apply(jaccard, axis=1, raw=True)  # 4
-    X['wc_diff'] = data.apply(wc_diff, axis=1, raw=True)  # 5
-    X['wc_ratio'] = data.apply(wc_ratio, axis=1, raw=True)  # 6
-    X['wc_diff_unique'] = data.apply(wc_diff_unique, axis=1, raw=True)  # 7
-    X['wc_ratio_unique'] = data.apply(wc_ratio_unique, axis=1, raw=True)  # 8
+    x['jaccard'] = data.apply(jaccard, axis=1, raw=True)  # 4
+    x['wc_diff'] = data.apply(wc_diff, axis=1, raw=True)  # 5
+    x['wc_ratio'] = data.apply(wc_ratio, axis=1, raw=True)  # 6
+    x['wc_diff_unique'] = data.apply(wc_diff_unique, axis=1, raw=True)  # 7
+    x['wc_ratio_unique'] = data.apply(wc_ratio_unique, axis=1, raw=True)  # 8
 
     f = functools.partial(wc_diff_unique_stop, stops=stops)
-    X['wc_diff_unq_stop'] = data.apply(f, axis=1, raw=True)  # 9
+    x['wc_diff_unq_stop'] = data.apply(f, axis=1, raw=True)  # 9
     f = functools.partial(wc_ratio_unique_stop, stops=stops)
-    X['wc_ratio_unique_stop'] = data.apply(f, axis=1, raw=True)  # 10
+    x['wc_ratio_unique_stop'] = data.apply(f, axis=1, raw=True)  # 10
 
-    X['same_start'] = data.apply(same_start_word, axis=1, raw=True)  # 11
-    X['char_diff'] = data.apply(char_diff, axis=1, raw=True)  # 12
+    x['same_start'] = data.apply(same_start_word, axis=1, raw=True)  # 11
+    x['char_diff'] = data.apply(char_diff, axis=1, raw=True)  # 12
 
     f = functools.partial(char_diff_unique_stop, stops=stops)
-    X['char_diff_unq_stop'] = data.apply(f, axis=1, raw=True)  # 13
+    x['char_diff_unq_stop'] = data.apply(f, axis=1, raw=True)  # 13
 
     #     X['common_words'] = data.apply(common_words, axis=1, raw=True)  #14
-    X['total_unique_words'] = data.apply(total_unique_words, axis=1, raw=True)  # 15
+    x['total_unique_words'] = data.apply(total_unique_words, axis=1, raw=True)  # 15
 
     f = functools.partial(total_unq_words_stop, stops=stops)
-    X['total_unq_words_stop'] = data.apply(f, axis=1, raw=True)  # 16
+    x['total_unq_words_stop'] = data.apply(f, axis=1, raw=True)  # 16
 
-    X['char_ratio'] = data.apply(char_ratio, axis=1, raw=True)  # 17
+    x['char_ratio'] = data.apply(char_ratio, axis=1, raw=True)  # 17
 
-    return X
+    return x
 
 
 def main():
@@ -327,9 +327,9 @@ def main():
     nltk.download("wordnet")
 
     df_train = pd.read_csv('../input/train_features.csv', encoding="ISO-8859-1")
-    X_train_ab = df_train.iloc[:, 2:-1]
-    X_train_ab = X_train_ab.drop('euclidean_distance', axis=1)
-    X_train_ab = X_train_ab.drop('jaccard_distance', axis=1)
+    x_train_ab = df_train.iloc[:, 2:-1]
+    x_train_ab = x_train_ab.drop('euclidean_distance', axis=1)
+    x_train_ab = x_train_ab.drop('jaccard_distance', axis=1)
 
     df_train = pd.read_csv('../input/train.csv')
     df_test = pd.read_csv('../input/test.csv')
@@ -349,13 +349,13 @@ def main():
         q_dict[ques.question2[i]].add(ques.question1[i])
 
     def q1_freq(row):
-        return (len(q_dict[row['question1']]))
+        return len(q_dict[row['question1']])
 
     def q2_freq(row):
-        return (len(q_dict[row['question2']]))
+        return len(q_dict[row['question2']])
 
     def q1_q2_intersect(row):
-        return (len(set(q_dict[row['question1']]).intersection(set(q_dict[row['question2']]))))
+        return len(set(q_dict[row['question1']]).intersection(set(q_dict[row['question2']])))
 
     df_train['q1_q2_intersect'] = df_train.apply(q1_q2_intersect, axis=1, raw=True)
     df_train['q1_freq'] = df_train.apply(q1_freq, axis=1, raw=True)
@@ -383,24 +383,24 @@ def main():
     weights = {word: get_weight(count) for word, count in counts.items()}
 
     print('Building Features')
-    X_train = build_features(df_train, stops, weights)
-    X_train = pd.concat((X_train, X_train_ab, train_leaky), axis=1)
+    x_train = build_features(df_train, stops, weights)
+    x_train = pd.concat((x_train, x_train_ab, train_leaky), axis=1)
     y_train = df_train['is_duplicate'].values
 
-    X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.1, random_state=4242)
+    x_train, x_valid, y_train, y_valid = train_test_split(x_train, y_train, test_size=0.1, random_state=4242)
 
     # UPDownSampling
-    pos_train = X_train[y_train == 1]
-    neg_train = X_train[y_train == 0]
-    X_train = pd.concat((neg_train, pos_train.iloc[:int(0.8 * len(pos_train))], neg_train))
+    pos_train = x_train[y_train == 1]
+    neg_train = x_train[y_train == 0]
+    x_train = pd.concat((neg_train, pos_train.iloc[:int(0.8 * len(pos_train))], neg_train))
     y_train = np.array(
         [0] * neg_train.shape[0] + [1] * pos_train.iloc[:int(0.8 * len(pos_train))].shape[0] + [0] * neg_train.shape[0])
     print(np.mean(y_train))
     del pos_train, neg_train
 
-    pos_valid = X_valid[y_valid == 1]
-    neg_valid = X_valid[y_valid == 0]
-    X_valid = pd.concat((neg_valid, pos_valid.iloc[:int(0.8 * len(pos_valid))], neg_valid))
+    pos_valid = x_valid[y_valid == 1]
+    neg_valid = x_valid[y_valid == 0]
+    x_valid = pd.concat((neg_valid, pos_valid.iloc[:int(0.8 * len(pos_valid))], neg_valid))
     y_valid = np.array(
         [0] * neg_valid.shape[0] + [1] * pos_valid.iloc[:int(0.8 * len(pos_valid))].shape[0] + [0] * neg_valid.shape[0])
     print(np.mean(y_valid))
@@ -415,8 +415,8 @@ def main():
         'base_score': 0.2
     }
 
-    d_train = xgb.DMatrix(X_train, label=y_train)
-    d_valid = xgb.DMatrix(X_valid, label=y_valid)
+    d_train = xgb.DMatrix(x_train, label=y_train)
+    d_valid = xgb.DMatrix(x_valid, label=y_valid)
 
     watchlist = [(d_train, 'train'), (d_valid, 'valid')]
 

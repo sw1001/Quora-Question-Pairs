@@ -22,12 +22,12 @@ from sklearn.metrics import roc_auc_score
 
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
-#%% load train data
+# load train data
 
 trainDF = pd.read_csv('../input/train.csv')
 trainDF = trainDF.dropna(how="any").reset_index(drop=True)
 
-#%% create dictionary and extract BOW features from questions
+# create dictionary and extract BOW features from questions
 
 featureExtractionStartTime = time.time()
 
@@ -38,7 +38,7 @@ BagOfWordsExtractor = CountVectorizer(max_df=0.999, min_df=1000, max_features=ma
                                       analyzer='char', ngram_range=(1,2),
                                       binary=True, lowercase=True)
 # bag of words
-#BagOfWordsExtractor = CountVectorizer(max_df=0.999, min_df=10, max_features=maxNumFeatures,
+# BagOfWordsExtractor = CountVectorizer(max_df=0.999, min_df=10, max_features=maxNumFeatures,
 #                                      analyzer='word', ngram_range=(1,6), stop_words='english',
 #                                      binary=True, lowercase=True)
 
@@ -49,9 +49,9 @@ trainQuestion2_BOW_rep = BagOfWordsExtractor.transform(trainDF.ix[:,'question2']
 lables = np.array(trainDF.ix[:,'is_duplicate'])
 
 featureExtractionDurationInMinutes = (time.time()-featureExtractionStartTime)/60.0
-print("feature extraction took %.2f minutes" % (featureExtractionDurationInMinutes))
+print("feature extraction took %.2f minutes" % featureExtractionDurationInMinutes)
 
-0  # %% prefrom cross validation
+# preform cross validation
 
 crossValidationStartTime = time.time()
 
@@ -102,13 +102,13 @@ for k, (trainInds, validInds) in enumerate(stratifiedCV.split(X, y)):
 crossValidationDurationInMinutes = (time.time() - crossValidationStartTime) / 60.0
 
 print('---------------------------------------------')
-print('cross validation took %.2f minutes' % (crossValidationDurationInMinutes))
+print('cross validation took %.2f minutes' % crossValidationDurationInMinutes)
 print('mean CV: accuracy = %.3f, log loss = %.4f, AUC = %.3f' % (np.array(logRegAccuracy).mean(),
                                                                  np.array(logRegLogLoss).mean(),
                                                                  np.array(logRegAUC).mean()))
 print('---------------------------------------------')
 
-#%% train on full training data
+# train on full training data
 
 trainingStartTime = time.time()
 
@@ -119,7 +119,7 @@ logisticRegressor.fit(X, y)
 trainingDurationInMinutes = (time.time()-trainingStartTime)/60.0
 print('full training took %.2f minutes' % (trainingDurationInMinutes))
 
-0#%% load test data, extract features and make predictions
+# load test data, extract features and make predictions
 
 testPredictionStartTime = time.time()
 
@@ -131,10 +131,10 @@ testQuestion1_BOW_rep = BagOfWordsExtractor.transform(testDF.ix[:,'question1'])
 testQuestion2_BOW_rep = BagOfWordsExtractor.transform(testDF.ix[:,'question2'])
 
 X_test = -(testQuestion1_BOW_rep != testQuestion2_BOW_rep).astype(int)
-#X_test = -(testQuestion1_BOW_rep != testQuestion2_BOW_rep).astype(int) + \
+# X_test = -(testQuestion1_BOW_rep != testQuestion2_BOW_rep).astype(int) + \
 #           testQuestion1_BOW_rep.multiply(testQuestion2_BOW_rep)
 
-#testPredictions = logisticRegressor.predict_proba(X_test)[:,1]
+# testPredictions = logisticRegressor.predict_proba(X_test)[:,1]
 
 # quick fix to avoid memory errors
 seperators= [750000,1500000]
@@ -144,9 +144,9 @@ testPredictions3 = logisticRegressor.predict_proba(X_test[seperators[1]:,:])[:,1
 testPredictions = np.hstack((testPredictions1,testPredictions2,testPredictions3))
 
 testPredictionDurationInMinutes = (time.time()-testPredictionStartTime)/60.0
-print('predicting on test took %.2f minutes' % (testPredictionDurationInMinutes))
+print('predicting on test took %.2f minutes' % testPredictionDurationInMinutes)
 
-#%% create a submission
+# create a submission
 
 submissionName = 'shallowBenchmark'
 

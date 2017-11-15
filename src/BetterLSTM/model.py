@@ -106,6 +106,7 @@ def extract_features(df):
 
     return q1s, q2s, features
 
+
 train = pd.read_csv("../../input/train.csv")
 test = pd.read_csv("../../input/test.csv")
 
@@ -232,5 +233,4 @@ for idx_train, idx_val in skf.split(train["is_duplicate"], train["is_duplicate"]
     submission.to_csv("predictions/preds" + str(model_count) + ".csv", index=False)
 
     model_count += 1
-
 

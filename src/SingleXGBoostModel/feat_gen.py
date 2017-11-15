@@ -79,11 +79,11 @@ def clean1(text):
     text = ''.join([c for c in text if c not in punctuation]).lower()
 
     text = text.split()
-    text = [w for w in text if not w in stops]
+    text = [w for w in text if w not in stops]
     text = ' '.join(text)
 
     # Return a list of words
-    return (text)
+    return text
 
 
 def magic1(train_in, test_in):
@@ -144,7 +144,7 @@ def magic1(train_in, test_in):
     train_comb = comb[comb['is_duplicate'] >= 0][ret_cols]
     test_comb = comb[comb['is_duplicate'] < 0][ret_cols]
 
-    return (train_comb[ret_cols], test_comb[ret_cols])
+    return train_comb[ret_cols], test_comb[ret_cols]
 
 
 def wordmatch1(train_in, test_in, qcolumns=['question1', 'question2'], append=''):
@@ -173,7 +173,7 @@ def wordmatch1(train_in, test_in, qcolumns=['question1', 'question2'], append=''
     train_df['wordmatch1' + append] = train_df.apply(word_match_share, axis=1)
     test_df['wordmatch1' + append] = test_df.apply(word_match_share, axis=1)
 
-    return (train_df, test_df)
+    return train_df, test_df
 
 
 def ngram_stats1(train_in, test_in, qcolumns=['question1', 'question2'], append=''):
@@ -193,7 +193,7 @@ def ngram_stats1(train_in, test_in, qcolumns=['question1', 'question2'], append=
 
     def get_ngram_stats(row, n, qcolumns, char=False, append=''):
 
-        if char == True:
+        if char:
             q1 = ''.join(row[qcolumns[0]].split())
             q2 = ''.join(row[qcolumns[1]].split())
         else:
@@ -265,7 +265,7 @@ def ngram_stats1(train_in, test_in, qcolumns=['question1', 'question2'], append=
                                     axis=1)
         test_in = test_in.combine_first(ngram_stats)
 
-    return (train_in, test_in)
+    return train_in, test_in
 
 
 def ngram_stats2(train_in, test_in, qcolumns=['question1', 'question2'], append='', char=False):
@@ -285,7 +285,7 @@ def ngram_stats2(train_in, test_in, qcolumns=['question1', 'question2'], append=
 
     def get_ngram_stats(row, n, qcolumns, char=False):
 
-        if char == True:
+        if char:
             q1 = ''.join(row[qcolumns[0]].split())
             q2 = ''.join(row[qcolumns[1]].split())
         else:
@@ -360,7 +360,7 @@ def ngram_stats2(train_in, test_in, qcolumns=['question1', 'question2'], append=
         ngram_stats = pd.DataFrame(ngram_stats, columns=keys_tmp, index=test_in.index)
         test_in = test_in.combine_first(ngram_stats)
 
-    return (train_in, test_in)
+    return train_in, test_in
 
 
 def edit_distance(train_in, test_in, qcolumns=['question1', 'question2'], append=''):
@@ -374,11 +374,10 @@ def edit_distance(train_in, test_in, qcolumns=['question1', 'question2'], append
     train[key] = train.apply(lambda x: my_fun(x, qcolumns=qcolumns), axis=1)
     test[key] = test.apply(lambda x: my_fun(x, qcolumns=qcolumns), axis=1)
 
-    return (train, test)
+    return train, test
 
 
 def fuzzy_feats(train_in, test_in, qcolumns=['question1', 'question2'], append=''):
-
 
     train = train_in.copy().loc[:, qcolumns]
     test = test_in.copy().loc[:, qcolumns]
@@ -397,6 +396,5 @@ def fuzzy_feats(train_in, test_in, qcolumns=['question1', 'question2'], append='
     test['fuzz_tsor' + append] = test.apply(lambda x: fuzz.partial_token_sort_ratio(x[qcolumns[0]], x[qcolumns[1]]),
                                             axis=1)
 
-    return (train, test)
-
+    return train, test
 

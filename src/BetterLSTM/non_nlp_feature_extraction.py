@@ -76,6 +76,7 @@ def get_freq_features(df, frequency_map):
     df["freq2"] = df["qid2"].map(lambda x: min(frequency_map[x], FREQ_UPPER_BOUND))
     return df
 
+
 train_df = pd.read_csv("../../input/train.csv")
 test_df = pd.read_csv("../../input/test.csv")
 

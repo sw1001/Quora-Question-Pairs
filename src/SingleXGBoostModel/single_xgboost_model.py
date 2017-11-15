@@ -50,7 +50,7 @@ train_df = train_df.iloc[:floor(len(train_df) * 0.9)]
 print(valid_df['is_duplicate'].mean())
 print(train_df['is_duplicate'].mean())
 
-# Reballance both datasets
+# Reballance both data sets
 valid_df = resample(valid_df)
 train_df = resample(train_df)
 
@@ -86,7 +86,7 @@ print(time() - start_time)
 # using a only a train/test method + early stopping.
 n_iter = bst.best_iteration
 
-## Fit to entire training set ################################################
+# Fit to entire training set ################################################
 
 print('training final model....')
 train_df = pd.read_csv('train_F9.csv', header=0, encoding='ISO-8859-1')

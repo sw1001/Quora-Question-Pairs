@@ -1,5 +1,5 @@
 ########################################
-## import packages
+# import packages
 ########################################
 import os
 import re
@@ -27,7 +27,7 @@ import sys
 # sys.setdefaultencoding('utf-8')
 
 ########################################
-## set directories and parameters
+# set directories and parameters
 ########################################
 BASE_DIR = '../input/'
 EMBEDDING_FILE = BASE_DIR + 'GoogleNews-vectors-negative300.bin'
@@ -51,7 +51,7 @@ STAMP = 'lstm_%d_%d_%.2f_%.2f' % (num_lstm, num_dense,
                                   rate_drop_dense)
 
 ########################################
-## index word vectors
+# index word vectors
 ########################################
 print('Indexing word vectors')
 
@@ -60,7 +60,7 @@ word2vec = KeyedVectors.load_word2vec_format(EMBEDDING_FILE,
 print('Found %s word vectors of word2vec' % len(word2vec.vocab))
 
 ########################################
-## process texts in datasets
+# process texts in data sets
 ########################################
 print('Processing text dataset')
 
@@ -76,7 +76,7 @@ def text_to_wordlist(text, remove_stopwords=False, stem_words=False):
     # Optionally, remove stop words
     if remove_stopwords:
         stops = set(stopwords.words("english"))
-        text = [w for w in text if not w in stops]
+        text = [w for w in text if w not in stops]
 
     text = " ".join(text)
 
@@ -119,7 +119,7 @@ def text_to_wordlist(text, remove_stopwords=False, stem_words=False):
         text = " ".join(stemmed_words)
 
     # Return a list of words
-    return (text)
+    return text
 
 
 texts_1 = []
@@ -168,7 +168,7 @@ test_data_2 = pad_sequences(test_sequences_2, maxlen=MAX_SEQUENCE_LENGTH)
 test_ids = np.array(test_ids)
 
 ########################################
-## prepare embeddings
+# prepare embeddings
 ########################################
 print('Preparing embedding matrix')
 
@@ -181,7 +181,7 @@ for word, i in word_index.items():
 print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
 
 ########################################
-## sample train/validation data
+# sample train/validation data
 ########################################
 # np.random.seed(1234)
 perm = np.random.permutation(len(data_1))
@@ -202,7 +202,7 @@ if re_weight:
     weight_val[labels_val == 0] = 1.309028344
 
 ########################################
-## define the model structure
+# define the model structure
 ########################################
 embedding_layer = Embedding(nb_words,
                             EMBEDDING_DIM,
@@ -230,7 +230,7 @@ merged = BatchNormalization()(merged)
 preds = Dense(1, activation='sigmoid')(merged)
 
 ########################################
-## add class weight
+# add class weight
 ########################################
 if re_weight:
     class_weight = {0: 1.309028344, 1: 0.472001959}
@@ -238,7 +238,7 @@ else:
     class_weight = None
 
 ########################################
-## train the model
+# train the model
 ########################################
 model = Model(inputs=[sequence_1_input, sequence_2_input],
               outputs=preds)
@@ -261,7 +261,7 @@ model.load_weights(bst_model_path)
 bst_val_score = min(hist.history['val_loss'])
 
 ########################################
-## make the submission
+# make the submission
 ########################################
 print('Start making the submission before fine-tuning')
 
@@ -270,4 +270,4 @@ preds += model.predict([test_data_2, test_data_1], batch_size=8192, verbose=1)
 preds /= 2
 
 submission = pd.DataFrame({'test_id': test_ids, 'is_duplicate': preds.ravel()})
-submission.to_csv('%.4f_' % (bst_val_score) + STAMP + '.csv', index=False)
+submission.to_csv('%.4f_' % bst_val_score + STAMP + '.csv', index=False)

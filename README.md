@@ -26,3 +26,4 @@ Thanks for all resources and all the contributors:
 
 1. [Shallow Benchmark](https://www.kaggle.com/selfishgene/shallow-benchmark-0-31675-lb)
 2. [First one solution](https://google.com)
+3. [Google word2vec](https://code.google.com/archive/p/word2vec/)

@@ -61,6 +61,7 @@ def get_longest_substr_ratio(a, b):
     else:
         return len(strs[0]) / (min(len(a), len(b)) + 1)
 
+
 def extract_features(df):
     df["question1"] = df["question1"].fillna("").apply(preprocess)
     df["question2"] = df["question2"].fillna("").apply(preprocess)
@@ -85,6 +86,7 @@ def extract_features(df):
     df["fuzz_partial_ratio"]    = df.apply(lambda x: fuzz.partial_ratio(x["question1"], x["question2"]), axis=1)
     df["longest_substr_ratio"]  = df.apply(lambda x: get_longest_substr_ratio(x["question1"], x["question2"]), axis=1)
     return df
+
 
 print("Extracting features for train:")
 train_df = pd.read_csv("data/train.csv")
